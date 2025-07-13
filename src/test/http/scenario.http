@@ -1,0 +1,80 @@
+#A[회원가입] --> B[로그인]
+### 회원가입
+POST /member
+host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "tester",
+  "email": "test1@test.com",
+  "password": "123123",
+  "roleType": "ROLE_USER"
+}
+
+### 로그인
+POST /auth/signin
+host: localhost:8080
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "123123"
+}
+
+> {% client.global.set("auth_token", response.body.accessToken); %}
+
+### 콘서트 목록 조회
+GET /concert?keyword="sample"
+host: localhost:8080
+Authorization: Bearer {{auth_token}}
+
+### 콘서트 조회
+GET /concert/802
+host: localhost:8080
+Authorization: Bearer {{auth_token}}
+
+### 콘서트 대기열
+POST /concert/802/queue
+host: localhost:8080
+Authorization: Bearer {{auth_token}}
+
+### 콘서트 대기열 조회
+GET /concert/802/queue/status
+host: localhost:8080
+Authorization: Bearer {{auth_token}}
+
+#C --> D[좌석 선택]
+### 좌석 선택
+GET /seat/665
+host: localhost:8080
+Authorization: Bearer {{auth_token}}
+
+#D --> E[예매 진행]
+### 예매 진행
+POST /reservation
+host: localhost:8080
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "concertId": 802,
+  "seatId": 665
+}
+
+### 결재 진행
+POST /payment
+host: localhost:8080
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "reservationId": 1,
+  "isSuccess": true
+}
+
+###
+#E --> F{결제 완료?}
+#F -->|Yes| G[예매 확정]
+#F -->|No| H[좌석 해제]
+#G --> I[예매 내역 조회]
+#I --> J[예매 취소/환불]
