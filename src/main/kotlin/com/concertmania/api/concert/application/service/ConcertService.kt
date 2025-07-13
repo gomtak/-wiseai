@@ -76,7 +76,7 @@ class ConcertService(
         return concert
     }
 
-    //    @PostConstruct
+    @PostConstruct
     fun init() {
         val title = "Sample Concert" + " - " + System.currentTimeMillis().toString().substring(8)
         createConcert(

@@ -1,4 +1,3 @@
-#A[회원가입] --> B[로그인]
 ### 회원가입
 POST /member
 host: localhost:8080
@@ -43,13 +42,11 @@ GET /concert/802/queue/status
 host: localhost:8080
 Authorization: Bearer {{auth_token}}
 
-#C --> D[좌석 선택]
 ### 좌석 선택
 GET /seat/665
 host: localhost:8080
 Authorization: Bearer {{auth_token}}
 
-#D --> E[예매 진행]
 ### 예매 진행
 POST /reservation
 host: localhost:8080
@@ -71,10 +68,3 @@ Content-Type: application/json
   "reservationId": 1,
   "isSuccess": true
 }
-
-###
-#E --> F{결제 완료?}
-#F -->|Yes| G[예매 확정]
-#F -->|No| H[좌석 해제]
-#G --> I[예매 내역 조회]
-#I --> J[예매 취소/환불]
